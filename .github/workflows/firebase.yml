@@ -1,0 +1,111 @@
+name: Build and deploy to Firebase
+
+on:
+  push:
+
+  pull_request:
+    branches:
+      - master
+      - stage
+      - dev
+
+jobs:
+  branch:
+    name: Get branch name
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Extract Branch Name by Push
+        if: github.event_name != 'pull_request'
+        run: |
+          BRANCH_NAME=${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Extract Branch Name by PR
+        if: github.event_name == 'pull_request'
+        run: |
+          BRANCH_NAME=${GITHUB_BASE_REF:-${GITHUB_HEAD_REF}}
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+    outputs:
+      branch_name: ${{ env.BRANCH_NAME }}
+
+  build:
+    needs:
+      - branch
+
+    name: Install dependencies, testing and build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x] # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Testing
+        run: yarn test:ci
+
+      - name: Build
+        if: needs.branch.outputs.branch_name == 'dev' || needs.branch.outputs.branch_name == 'stage' || needs.branch.outputs.branch_name == 'master'
+        run: yarn build:${{ needs.branch.outputs.branch_name }}
+
+      - name: Create Bundle
+        if: needs.branch.outputs.branch_name == 'dev' || needs.branch.outputs.branch_name == 'stage' || needs.branch.outputs.branch_name == 'master'
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build
+
+  deploy:
+    name: Deploy
+    needs:
+      - branch
+      - build
+
+    if: needs.branch.outputs.branch_name == 'dev' || needs.branch.outputs.branch_name == 'stage' || needs.branch.outputs.branch_name == 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download Bundle
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:${{ needs.branch.outputs.branch_name }}
+
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

@@ -1,0 +1,37 @@
+{
+	"hosting": [
+		{
+			"ignore": [],
+			"public": "build",
+			"rewrites": [
+				{
+					"source": "**",
+					"destination": "/index.html"
+				}
+			],
+			"target": "master"
+		},
+		{
+			"ignore": [],
+			"public": "build",
+			"rewrites": [
+				{
+					"source": "**",
+					"destination": "/index.html"
+				}
+			],
+			"target": "stage"
+		},
+		{
+			"ignore": [],
+			"public": "build",
+			"rewrites": [
+				{
+					"source": "**",
+					"destination": "/index.html"
+				}
+			],
+			"target": "dev"
+		}
+	]
+}

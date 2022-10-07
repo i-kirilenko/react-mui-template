@@ -1,0 +1,20 @@
+{
+  "projects": {
+    "default": "react-mui-template"
+  },
+  "targets": {
+    "react-mui-template": {
+      "hosting": {
+        "master": [
+          "react-mui-template"
+        ],
+        "stage": [
+          "react-mui-template-stage"
+        ],
+        "dev": [
+          "react-mui-template-dev"
+        ]
+      }
+    }
+  }
+}
