@@ -3,10 +3,11 @@
     "name": "Kirilenko"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
     "classnames": "^2.3.1",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "styled-components": "^5.3.5"
+    "react-dom": "^18.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
