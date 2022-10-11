@@ -2,6 +2,7 @@ export const envList = [
   'VITE_BRANCH',
   'VITE_DEBUG_CLASSNAME_ENABLED',
   'VITE_DEBUG_LOG_ENABLED',
+  'VITE_PROJECT_PUBLIC_NAME',
   'VITE_TEST_ENABLED',
   'VITE_TIMESTAMP',
 ] as const
@@ -12,6 +13,7 @@ const envKeys = [
   'branch',
   'debugClassNameEnabled',
   'debugLogEnabled',
+  'projectPublicName',
   'testEnabled',
   'timestamp',
 ] as const
@@ -35,6 +37,10 @@ export const envConfig: Record<EnvListItem, EnvMapItem> = {
   VITE_DEBUG_LOG_ENABLED: {
     name: 'debugLogEnabled',
     type: 'boolean',
+  },
+  VITE_PROJECT_PUBLIC_NAME: {
+    name: 'projectPublicName',
+    type: 'string',
   },
   VITE_TEST_ENABLED: {
     name: 'testEnabled',

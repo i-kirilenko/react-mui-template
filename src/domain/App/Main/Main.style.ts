@@ -19,10 +19,8 @@ export const StyledMain = styled.div<Props>`
   display: flex;
 
   overflow-y: auto;
-  align-items: center;
   flex: auto;
   flex-direction: column;
-  justify-content: center;
 
   padding-top: ${headerHeight}px;
 

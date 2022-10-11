@@ -1,4 +1,6 @@
 import { FC, PropsWithChildren, StrictMode } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
+import { HashRouter as Router } from 'react-router-dom'
 
 import env from 'constants/env'
 import { initialSidebarExpanded } from 'constants/layout'
@@ -13,7 +15,9 @@ const AppWrapper: FC<PropsWithChildren<AppWrapperProps>> = ({ children }) => {
   return (
     <StrictMode>
       <LayoutContextProvider sidebarExpanded={initialSidebarExpanded}>
-        {children}
+        <HelmetProvider>
+          <Router>{children}</Router>
+        </HelmetProvider>
       </LayoutContextProvider>
       <span style={{ display: 'none' }}>
         {`${env.timestamp} / Branch: ${env.branch}`}

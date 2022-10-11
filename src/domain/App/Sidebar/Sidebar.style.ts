@@ -13,11 +13,8 @@ type Props = {
 }
 
 export const StyledSidebar = styled.div<Props>`
-  display: flex;
   overflow-y: auto;
-  align-items: center;
   flex: none;
-  justify-content: center;
 
   width: ${expanded}px;
   margin-left: ${(p) => (p.sidebarExpanded ? 0 : collapsed - expanded)}px;

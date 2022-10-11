@@ -4,6 +4,7 @@ import { useLayout } from 'domain/AppWrapper/LayoutContext'
 import { cnc } from 'utils/classNameCreator'
 import log from 'utils/log'
 import { withRenderingTest } from 'utils/test/renderingTest.hoc'
+import Menu from './Menu'
 
 import { StyledSidebar } from './Sidebar.style'
 
@@ -14,7 +15,7 @@ const Sidebar: FC = () => {
 
   return (
     <StyledSidebar className={cnc('Sidebar')} {...{ sidebarExpanded }}>
-      Sidebar
+      <Menu />
     </StyledSidebar>
   )
 }

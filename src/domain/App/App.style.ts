@@ -11,5 +11,5 @@ export const StyledApp = styled.div`
 
   background: #252525;
 
-  font: 2rem sans-serif;
+  font-family: sans-serif;
 `

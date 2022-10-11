@@ -5,6 +5,7 @@ import {
   minWindowWidthByExpandedSidebar,
   sidebarAnimateDuration,
   sidebarWidth,
+  zIndexes,
 } from 'constants/layout'
 
 const { expanded, collapsed } = sidebarWidth
@@ -15,6 +16,8 @@ type Props = {
 
 export const StyledHeader = styled.div<Props>`
   position: fixed;
+
+  z-index: ${zIndexes.header};
 
   top: 0;
   left: ${(p) => (p.sidebarExpanded ? expanded : collapsed)}px;
