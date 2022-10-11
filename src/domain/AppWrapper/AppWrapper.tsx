@@ -1,6 +1,8 @@
 import { FC, PropsWithChildren, StrictMode } from 'react'
 
 import env from 'constants/env'
+import { initialSidebarExpanded } from 'constants/layout'
+import { LayoutContextProvider } from 'domain/AppWrapper/LayoutContext/LayoutContext.provider'
 import log from 'utils/log'
 
 type AppWrapperProps = {}
@@ -10,7 +12,9 @@ const AppWrapper: FC<PropsWithChildren<AppWrapperProps>> = ({ children }) => {
 
   return (
     <StrictMode>
-      {children}
+      <LayoutContextProvider sidebarExpanded={initialSidebarExpanded}>
+        {children}
+      </LayoutContextProvider>
       <span style={{ display: 'none' }}>
         {`${env.timestamp} / Branch: ${env.branch}`}
       </span>
