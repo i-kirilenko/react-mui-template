@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useLayout } from 'domain/AppWrapper/LayoutContext'
+import { getLogPostfix, useLayout } from 'domain/AppWrapper/LayoutContext'
 import { cnc } from 'utils/classNameCreator'
 import log from 'utils/log'
 import { withRenderingTest } from 'utils/test/renderingTest.hoc'
@@ -9,12 +9,17 @@ import SidebarHandle from './SidebarHandle'
 import { StyledHeader } from './Header.style'
 
 const Header: FC = () => {
-  const { sidebarExpanded } = useLayout()
+  const [layoutState] = useLayout()
 
-  log(`Header.sidebar-${sidebarExpanded ? 'expanded' : 'collapsed'}.render`)()
+  log(`Header.sidebar-${getLogPostfix(layoutState)}.render`)()
+
+  if (layoutState === null) return null
 
   return (
-    <StyledHeader className={cnc('Header')} {...{ sidebarExpanded }}>
+    <StyledHeader
+      className={cnc('Header')}
+      sidebarExpanded={layoutState.sidebarExpanded}
+    >
       <SidebarHandle />
       <span style={{ flex: 'auto', textAlign: 'center' }}>Header</span>
     </StyledHeader>

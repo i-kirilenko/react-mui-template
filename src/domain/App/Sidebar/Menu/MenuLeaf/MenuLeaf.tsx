@@ -16,13 +16,17 @@ const MenuLeaf: FC<MenuLeafProps> = ({ path, id, label }) => {
 
   log(`MenuLeaf-${id}${windowWidth ? '' : '.initial'}.render`)()
 
-  const { setSidebarExpanded } = useLayout()
+  const [layoutState, setLayoutState] = useLayout()
 
   const handleLinkClick = useCallback(() => {
-    if (windowWidth && windowWidth < minWindowWidthByExpandedSidebar) {
-      setSidebarExpanded(false)
+    if (
+      windowWidth &&
+      windowWidth < minWindowWidthByExpandedSidebar &&
+      layoutState?.sidebarExpanded
+    ) {
+      setLayoutState({ sidebarExpanded: false })
     }
-  }, [setSidebarExpanded, windowWidth])
+  }, [layoutState?.sidebarExpanded, setLayoutState, windowWidth])
 
   return (
     <StyledMenuLeaf className={cnc('MenuLeaf')}>
