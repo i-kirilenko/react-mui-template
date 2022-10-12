@@ -1,25 +1,29 @@
 import { FC } from 'react'
 
-import { getLogPostfix, useLayout } from 'domain/AppWrapper/LayoutContext'
+import { initialSidebarExpanded } from 'constants/layout'
+import { LocalSettingsState } from 'domain/AppWrapper/AppWrapper.adapter.LocalSettingsContext'
+import { useLocalSettings } from 'domain/AppWrapper/LocalSettingsContext'
 import { cnc } from 'utils/classNameCreator'
 import log from 'utils/log'
 import { withRenderingTest } from 'utils/test/renderingTest.hoc'
 import SidebarHandle from './SidebarHandle'
 
-import { StyledHeader } from './Header.style'
+import { Props as StyledHeaderProps, StyledHeader } from './Header.style'
 
 const Header: FC = () => {
-  const [layoutState] = useLayout()
+  const [localSettingsState] = useLocalSettings<LocalSettingsState>()
+  const { sidebarExpanded = null } = localSettingsState || {}
 
-  log(`Header.sidebar-${getLogPostfix(layoutState)}.render`)()
+  log(`Header${sidebarExpanded === null ? '.initial' : ''}.render`)(
+    sidebarExpanded,
+  )
 
-  if (layoutState === null) return null
+  const styledHeaderProps: StyledHeaderProps = {
+    sidebarExpanded: sidebarExpanded ?? initialSidebarExpanded,
+  }
 
   return (
-    <StyledHeader
-      className={cnc('Header')}
-      sidebarExpanded={layoutState.sidebarExpanded}
-    >
+    <StyledHeader className={cnc('Header')} {...styledHeaderProps}>
       <SidebarHandle />
       <span style={{ flex: 'auto', textAlign: 'center' }}>Header</span>
     </StyledHeader>

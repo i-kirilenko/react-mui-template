@@ -6,9 +6,9 @@ import {
   sidebarWidth,
 } from 'constants/layout'
 
-const { expanded, collapsed } = sidebarWidth
+const { expanded: expandedWidth, collapsed: collapsedWidth } = sidebarWidth
 
-type Props = {
+export type Props = {
   sidebarExpanded: boolean
 }
 
@@ -16,8 +16,9 @@ export const StyledSidebar = styled.div<Props>`
   overflow-y: auto;
   flex: none;
 
-  width: ${expanded}px;
-  margin-left: ${(p) => (p.sidebarExpanded ? 0 : collapsed - expanded)}px;
+  width: ${expandedWidth}px;
+  margin-left: ${(p) =>
+    p.sidebarExpanded ? 0 : collapsedWidth - expandedWidth}px;
 
   transition: ${sidebarAnimateDuration}s;
 
@@ -26,6 +27,6 @@ export const StyledSidebar = styled.div<Props>`
   @media (max-width: ${minWindowWidthByExpandedSidebar}px) {
     width: 100%;
     margin-left: ${(p) =>
-      p.sidebarExpanded ? 0 : `calc(${collapsed}px - 100%)`};
+      p.sidebarExpanded ? 0 : `calc(${collapsedWidth}px - 100%)`};
   }
 `

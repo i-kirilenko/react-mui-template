@@ -1,25 +1,29 @@
 import { FC } from 'react'
 
-import { getLogPostfix, useLayout } from 'domain/AppWrapper/LayoutContext'
+import { initialSidebarExpanded } from 'constants/layout'
+import { LocalSettingsState } from 'domain/AppWrapper/AppWrapper.adapter.LocalSettingsContext'
+import { useLocalSettings } from 'domain/AppWrapper/LocalSettingsContext'
 import { cnc } from 'utils/classNameCreator'
 import log from 'utils/log'
 import { withRenderingTest } from 'utils/test/renderingTest.hoc'
 import Menu from './Menu'
 
-import { StyledSidebar } from './Sidebar.style'
+import { Props as StyledSidebarProps, StyledSidebar } from './Sidebar.style'
 
 const Sidebar: FC = () => {
-  const [layoutState] = useLayout()
+  const [localSettingsState] = useLocalSettings<LocalSettingsState>()
+  const { sidebarExpanded = null } = localSettingsState || {}
 
-  log(`Sidebar-${getLogPostfix(layoutState)}.render`)()
+  log(`Sidebar${sidebarExpanded === null ? '.initial' : ''}.render`)(
+    sidebarExpanded,
+  )
 
-  if (layoutState === null) return null
+  const styledSidebarProps: StyledSidebarProps = {
+    sidebarExpanded: sidebarExpanded ?? initialSidebarExpanded,
+  }
 
   return (
-    <StyledSidebar
-      className={cnc('Sidebar')}
-      sidebarExpanded={layoutState.sidebarExpanded}
-    >
+    <StyledSidebar className={cnc('Sidebar')} {...styledSidebarProps}>
       <Menu />
     </StyledSidebar>
   )

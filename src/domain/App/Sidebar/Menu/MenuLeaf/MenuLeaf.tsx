@@ -2,7 +2,8 @@ import { FC, memo, useCallback } from 'react'
 
 import Link from 'components/Link'
 import { minWindowWidthByExpandedSidebar } from 'constants/layout'
-import { useLayout } from 'domain/AppWrapper/LayoutContext'
+import { LocalSettingsState } from 'domain/AppWrapper/AppWrapper.adapter.LocalSettingsContext'
+import { useLocalSettings } from 'domain/AppWrapper/LocalSettingsContext'
 import { cnc } from 'utils/classNameCreator'
 import log from 'utils/log'
 import { withRenderingTest } from 'utils/test/renderingTest.hoc'
@@ -14,19 +15,26 @@ import { StyledMenuLeaf } from './MenuLeaf.style'
 const MenuLeaf: FC<MenuLeafProps> = ({ path, id, label }) => {
   const { width: windowWidth } = useWindowDimensions()
 
-  log(`MenuLeaf-${id}${windowWidth ? '' : '.initial'}.render`)()
+  const [localSettingsState, setLocalSettingsState] =
+    useLocalSettings<LocalSettingsState>()
 
-  const [layoutState, setLayoutState] = useLayout()
+  const { sidebarExpanded = null } = localSettingsState || {}
+
+  log(
+    `MenuLeaf-${id}.${
+      windowWidth + (sidebarExpanded === null ? '.initial' : '')
+    }.render`,
+  )(sidebarExpanded)
 
   const handleLinkClick = useCallback(() => {
     if (
       windowWidth &&
       windowWidth < minWindowWidthByExpandedSidebar &&
-      layoutState?.sidebarExpanded
+      localSettingsState?.sidebarExpanded
     ) {
-      setLayoutState({ sidebarExpanded: false })
+      setLocalSettingsState({ sidebarExpanded: false })
     }
-  }, [layoutState?.sidebarExpanded, setLayoutState, windowWidth])
+  }, [localSettingsState?.sidebarExpanded, setLocalSettingsState, windowWidth])
 
   return (
     <StyledMenuLeaf className={cnc('MenuLeaf')}>

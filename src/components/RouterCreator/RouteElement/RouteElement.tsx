@@ -1,4 +1,4 @@
-import { ComponentType, FC, LazyExoticComponent, Suspense } from 'react'
+import { ComponentType, FC, LazyExoticComponent, memo, Suspense } from 'react'
 import { Navigate, useLocation } from 'react-router'
 
 import useAuth, { Role } from 'components/Auth/Auth.hooks'
@@ -62,4 +62,4 @@ const RouteElement: FC<RouteElementProps> = (props) => {
   return null
 }
 
-export default RouteElement
+export default memo(RouteElement)

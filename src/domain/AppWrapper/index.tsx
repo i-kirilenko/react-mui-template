@@ -10,3 +10,5 @@ export const withAppWrapper = <Props extends Record<string, unknown>>(
     <Component {...props} />
   </AppWrapper>
 )
+
+export { default } from './AppWrapper'
