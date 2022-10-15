@@ -1,12 +1,7 @@
 import { useContext } from 'react'
 
 import { ContextValue } from 'components/Logger'
-import {
-  LocalSettingsAbstractState,
-  LocalSettingsContext,
-} from './LocalSettingsContext.provider'
+import { getLocalSettingsContext } from './LocalSettingsContext.provider'
 
-export const useLocalSettings = <
-  State extends LocalSettingsAbstractState,
->(): ContextValue<State> =>
-  useContext(LocalSettingsContext) as ContextValue<State>
+export const useLocalSettings = <State extends {}>(): ContextValue<State> =>
+  useContext(getLocalSettingsContext<State>()) as ContextValue<State>

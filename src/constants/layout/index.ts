@@ -1,6 +1,6 @@
-export const headerHeight = 48
+export const defaultSidebarExpanded = true
 
-export const initialSidebarExpanded = true
+export const headerHeight = 48
 
 export const minWindowWidthByExpandedSidebar = 600
 

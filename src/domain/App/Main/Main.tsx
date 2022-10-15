@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Routes } from 'react-router-dom'
 
 import RouteCreator from 'components/RouterCreator'
-import { initialSidebarExpanded } from 'constants/layout'
+import { defaultSidebarExpanded } from 'constants/layout'
 import routes from 'constants/routes'
 import { LocalSettingsState } from 'domain/AppWrapper/AppWrapper.adapter.LocalSettingsContext'
 import { useLocalSettings } from 'domain/AppWrapper/LocalSettingsContext'
@@ -21,7 +21,7 @@ const Main: FC = () => {
   )
 
   const styledMainProps: StyledMainProps = {
-    sidebarExpanded: sidebarExpanded ?? initialSidebarExpanded,
+    sidebarExpanded: sidebarExpanded ?? defaultSidebarExpanded,
   }
 
   return (

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { initialSidebarExpanded } from 'constants/layout'
+import { defaultSidebarExpanded } from 'constants/layout'
 import { LocalSettingsState } from 'domain/AppWrapper/AppWrapper.adapter.LocalSettingsContext'
 import { useLocalSettings } from 'domain/AppWrapper/LocalSettingsContext'
 import { cnc } from 'utils/classNameCreator'
@@ -19,7 +19,7 @@ const Header: FC = () => {
   )
 
   const styledHeaderProps: StyledHeaderProps = {
-    sidebarExpanded: sidebarExpanded ?? initialSidebarExpanded,
+    sidebarExpanded: sidebarExpanded ?? defaultSidebarExpanded,
   }
 
   return (

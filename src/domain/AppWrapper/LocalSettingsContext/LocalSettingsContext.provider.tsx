@@ -4,7 +4,6 @@ import React, {
   Provider as ReactProvider,
   useCallback,
   useEffect,
-  useMemo,
   useState,
 } from 'react'
 
@@ -14,66 +13,73 @@ import {
   ProviderPropsWithLogger,
   StateSetter,
 } from 'components/Logger'
+import log from 'utils/log'
 import {
   restoreLocalSettingsState,
-  RestoreLocalSettingsStateProps,
   saveLocalSettingsState,
   SaveLocalSettingsStateProps,
 } from './LocalSettingsContext.features'
 
 export const LocalSettingsContext = createContextWithLogger()
 
+export const getLocalSettingsContext = <State extends {}>() =>
+  LocalSettingsContext as unknown as ReactContext<ContextValue<State>>
+
 export type LocalSettingsAbstractState = {
   name: string | null
 }
 
-export const LocalSettingsContextProvider = <
-  State extends LocalSettingsAbstractState,
->(
-  props: PropsWithChildren<ProviderPropsWithLogger<State>>,
+export type LocalSettingsContextProviderProps<State extends {}> =
+  PropsWithChildren<ProviderPropsWithLogger<State> & LocalSettingsAbstractState>
+
+const LocalSettingsContextProvider = <State extends {}>(
+  props: LocalSettingsContextProviderProps<State>,
 ): JSX.Element => {
   const {
     children,
-    initial = null,
+    initialState,
     logger = { error: [], success: [] },
+    name = null,
   } = props
 
-  const [state, setState] = useState<State | null>(initial)
+  const [state, setState] = useState<State>(initialState)
 
-  const name: string | null = useMemo(
-    () => (state as LocalSettingsAbstractState | null)?.name ?? null,
-    [state],
-  )
+  log(
+    `LocalSettingsContextProvider.${
+      state === initialState ? 'initial' : 'existed'
+    }-state.render`,
+  )()
 
   const setLocalSettings: StateSetter<State> = useCallback(
     (updating: Partial<State>) => {
       const saveProps: SaveLocalSettingsStateProps<State> = {
         logger,
-        state: state ?? ({} as State),
+        name,
+        state,
         updating,
       }
 
-      const updatedState: State | null =
-        saveLocalSettingsState<State>(saveProps)
-
-      setState(updatedState)
+      setState(saveLocalSettingsState<State>(saveProps))
     },
-    [logger, state],
+    [logger, name, state],
   )
 
   useEffect(() => {
-    const restoreProps: RestoreLocalSettingsStateProps = { logger, name }
-    const restoredState: State | null =
-      restoreLocalSettingsState<State>(restoreProps)
-
-    restoredState && setState(restoredState)
-  }, [logger, name])
+    setState(
+      restoreLocalSettingsState<State>({
+        logger,
+        name,
+      }) ?? initialState,
+    )
+  }, [initialState, logger, name])
 
   const value: ContextValue<State> = [state, setLocalSettings]
 
   const Context: ReactContext<ContextValue<State>> =
-    LocalSettingsContext as ReactContext<ContextValue<State>>
+    getLocalSettingsContext<State>()
 
   const Provider = Context.Provider as ReactProvider<ContextValue<State>>
   return <Provider {...{ value }}>{children}</Provider>
 }
+
+export default LocalSettingsContextProvider

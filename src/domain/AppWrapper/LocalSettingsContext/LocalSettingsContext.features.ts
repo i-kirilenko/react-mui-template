@@ -18,6 +18,8 @@ export const restoreLocalSettingsState = <State extends {}>({
       localSettingsRawState ? JSON.parse(localSettingsRawState) : null
     ) as State | null
 
+    // console.log('>>> state', state)
+
     const status = state ? 'exist' : 'not exist'
     logger.success?.forEach((logAction) => logAction(status))
 
@@ -33,21 +35,22 @@ export const restoreLocalSettingsState = <State extends {}>({
 
 export type SaveLocalSettingsStateProps<State extends {}> = {
   logger: Logger
+  name: string | null
   state: State
   updating?: Partial<State>
 }
 export const saveLocalSettingsState = <State extends {}>(
   props: SaveLocalSettingsStateProps<State>,
-): State | null => {
-  const { logger, state, updating = {} } = props
-  try {
-    const updatedState: { name?: string } & State = {
-      ...state,
-      ...updating,
-    }
+): State => {
+  const { logger, name, state, updating = {} } = props
+  const updatedState: State = {
+    ...state,
+    ...updating,
+  }
 
-    !updatedState.name && new Error('Local storage name is required')
-    localStorage.setItem(updatedState.name!, JSON.stringify(updatedState))
+  try {
+    !name && new Error('Local storage name is required')
+    localStorage.setItem(name!, JSON.stringify(updatedState))
     logger.success?.forEach((logAction) => logAction())
 
     return updatedState
@@ -56,6 +59,6 @@ export const saveLocalSettingsState = <State extends {}>(
       logAction('Error by updating data in local storage'),
     )
 
-    return null
+    return updatedState
   }
 }

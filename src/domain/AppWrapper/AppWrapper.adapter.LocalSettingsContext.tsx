@@ -1,22 +1,37 @@
-import { FC, PropsWithChildren, useMemo } from 'react'
+import { Consumer, FC, PropsWithChildren, useMemo } from 'react'
 import { useSnackbar } from 'notistack'
 
-import { ProviderPropsWithLogger } from 'components/Logger'
+import { ContextValue } from 'components/Logger'
 import env from 'constants/env'
-import log from 'utils/log'
 import {
-  LocalSettingsAbstractState,
-  LocalSettingsContextProvider as LocalSettingsAbstractContextProvider,
+  LocaleName,
+  ThemeName,
+} from 'domain/AppWrapper/ThemeContext/ThemeContext.features'
+import log from 'utils/log'
+import LocalSettingsAbstractContextProvider, {
+  LocalSettingsContext,
+  LocalSettingsContextProviderProps,
 } from './LocalSettingsContext/LocalSettingsContext.provider'
 
-export type LocalSettingsState = LocalSettingsAbstractState & {
+export type LocalSettingsState = {
+  localeName: LocaleName
   sidebarExpanded: boolean | null
+  themeName: ThemeName
 }
 
-const LocalSettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
+type Props = {
+  initialState: LocalSettingsState
+}
+
+const LocalSettingsContextProvider: FC<PropsWithChildren<Props>> = ({
+  children,
+  initialState,
+}) => {
+  log('LocalSettingsContextProvider.adapter.render')()
+
   const { enqueueSnackbar } = useSnackbar()
 
-  const localSettingsProviderProps: ProviderPropsWithLogger<LocalSettingsState> =
+  const localSettingsProviderProps: LocalSettingsContextProviderProps<LocalSettingsState> =
     useMemo(() => {
       !env.projectPublicName &&
         log(
@@ -25,10 +40,7 @@ const LocalSettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
         )('missing env.projectPublicName')
 
       return {
-        initial: {
-          name: (env.projectPublicName as string | undefined) ?? null,
-          sidebarExpanded: null,
-        },
+        initialState,
         logger: {
           error: [
             (message) => log('LocalSettings.error', 'error')(message || ''),
@@ -38,8 +50,9 @@ const LocalSettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
             (message) => log('LocalSettings.success', 'success')(message || ''),
           ],
         },
+        name: (env.projectPublicName as string | undefined) ?? null,
       }
-    }, [enqueueSnackbar])
+    }, [enqueueSnackbar, initialState])
 
   return (
     <LocalSettingsAbstractContextProvider<LocalSettingsState>
@@ -50,7 +63,7 @@ const LocalSettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
   )
 }
 
-// export const LocalSettingsContextConsumer =
-//   LocalSettingsContext.Consumer as Consumer<ContextValue<LocalSettingsState>>
+export const LocalSettingsContextConsumer =
+  LocalSettingsContext.Consumer as Consumer<ContextValue<LocalSettingsState>>
 
 export default LocalSettingsContextProvider

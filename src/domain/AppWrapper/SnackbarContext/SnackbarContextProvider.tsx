@@ -1,10 +1,11 @@
 import { FC, PropsWithChildren, useMemo } from 'react'
 import { SnackbarAction, SnackbarOrigin, SnackbarProvider } from 'notistack'
 
+import log from 'utils/log'
 import SnackbarCloseButton from './SnackbarCloseButton'
 
-const SnackbarContextProvider: FC<PropsWithChildren> = (props) => {
-  const { children } = props
+const SnackbarContextProvider: FC<PropsWithChildren> = ({ children }) => {
+  log('SnackbarContextProvider.render')()
 
   const snackbarProviderProps = useMemo(
     () => ({
