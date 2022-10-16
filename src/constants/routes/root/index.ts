@@ -51,6 +51,16 @@ const rootRouteConfig: Record<RootRouteId, Omit<RouteConfig, 'signInPath'>> = {
     roles: ['guest', 'user', 'admin'],
   },
 
+  profile: {
+    id: 'profile',
+    lazyComponent: lazy(
+      () => import('domain/App/Main/Profile'),
+    ) as LazyComponent,
+
+    path: rootPaths.profile,
+    roles: ['user', 'admin'],
+  },
+
   projects: projectsRouteConfig,
 
   signIn: {

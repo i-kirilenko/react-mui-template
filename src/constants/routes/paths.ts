@@ -5,6 +5,7 @@ export const rootPaths = {
   agile: '/agile',
   calendar: '/calendar',
   home: '/',
+  profile: '/profile',
   projects: '/projects',
   signIn: signInPath,
   signOut: '/sign-out',
