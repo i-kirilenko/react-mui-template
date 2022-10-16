@@ -1,9 +1,10 @@
-import { FC, PropsWithChildren, useEffect, useState } from 'react'
+import { FC, memo, PropsWithChildren, useEffect, useState } from 'react'
 import { Theme } from '@mui/material'
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 
+import { ThemeName } from 'constants/themes/base'
 import log from 'utils/log'
-import { createTheme, LocaleName, ThemeName } from './ThemeContext.features'
+import { createTheme, LocaleName } from './ThemeContext.features'
 
 type ThemeProviderProps = {
   localeName: LocaleName
@@ -17,7 +18,10 @@ const ThemeContextProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
 }) => {
   const [theme, setTheme] = useState<Theme | null>(null)
 
-  log(`ThemeContextProvider${theme ? '' : '.initial'}.${themeName}.render`)()
+  log(`ThemeContextProvider${theme ? '' : '.initial'}.${themeName}.render`)(
+    // @ts-ignore
+    `now is ${theme?.palette?.themeName}`,
+  )
 
   useEffect(() => {
     ;(async () => {
@@ -31,4 +35,4 @@ const ThemeContextProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
   ) : null
 }
 
-export default ThemeContextProvider
+export default memo(ThemeContextProvider)

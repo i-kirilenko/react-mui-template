@@ -6,10 +6,9 @@ import {
 } from '@mui/material'
 import { Localization } from '@mui/material/locale'
 
-import { baseThemeOptions } from 'constants/themes/base'
+import { baseThemeOptions, ThemeName } from 'constants/themes/base'
 
 export type LocaleName = 'enUS' | 'ruRU'
-export type ThemeName = 'light' | 'dark'
 type ThemeConfig = {
   localeName: LocaleName
   themeName: ThemeName

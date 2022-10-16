@@ -86,6 +86,7 @@ const darkThemeOptions: ThemeOptions = {
     secondary,
     success,
     text,
+    themeName: 'dark',
     warning,
   },
   shadows: [

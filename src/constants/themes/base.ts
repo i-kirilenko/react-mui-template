@@ -1,5 +1,7 @@
 import { ThemeOptions } from '@mui/material'
 
+export type ThemeName = 'light' | 'dark'
+
 interface Neutral {
   100: string
   200: string
@@ -19,6 +21,7 @@ declare module '@mui/material/styles' {
 
   interface PaletteOptions {
     neutral: Neutral
+    themeName: ThemeName
   }
 }
 

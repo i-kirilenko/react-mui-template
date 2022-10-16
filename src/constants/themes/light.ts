@@ -87,6 +87,7 @@ const lightThemeOptions: ThemeOptions = {
     secondary,
     success,
     text,
+    themeName: 'light',
     warning,
   },
   shadows: [

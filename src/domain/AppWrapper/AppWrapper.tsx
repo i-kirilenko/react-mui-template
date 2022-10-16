@@ -4,8 +4,9 @@ import { HashRouter as Router } from 'react-router-dom'
 
 import env from 'constants/env'
 import { defaultSidebarExpanded } from 'constants/layout'
+import { ThemeName } from 'constants/themes/base'
 import log from 'utils/log'
-import { LocaleName, ThemeName } from './ThemeContext/ThemeContext.features'
+import { LocaleName } from './ThemeContext/ThemeContext.features'
 import LocalSettingsContextProvider, {
   LocalSettingsContextConsumer,
 } from './AppWrapper.adapter.LocalSettingsContext'

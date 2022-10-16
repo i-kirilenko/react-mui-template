@@ -3,10 +3,8 @@ import { useSnackbar } from 'notistack'
 
 import { ContextValue } from 'components/Logger'
 import env from 'constants/env'
-import {
-  LocaleName,
-  ThemeName,
-} from 'domain/AppWrapper/ThemeContext/ThemeContext.features'
+import { ThemeName } from 'constants/themes/base'
+import { LocaleName } from 'domain/AppWrapper/ThemeContext/ThemeContext.features'
 import log from 'utils/log'
 import LocalSettingsAbstractContextProvider, {
   LocalSettingsContext,
