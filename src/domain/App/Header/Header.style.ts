@@ -30,7 +30,7 @@ export const StyledHeader = styled.div<Props>`
   width: calc(100% - ${(p) => (p.sidebarExpanded ? expanded : collapsed)}px);
   height: ${headerHeight}px;
 
-  transition: ${sidebarAnimateDuration}s;
+  transition: ${sidebarAnimateDuration}s ease-in-out;
 
   background: #424245;
 

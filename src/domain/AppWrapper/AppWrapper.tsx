@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren, StrictMode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { HashRouter as Router } from 'react-router-dom'
+import { CssBaseline } from '@mui/material'
 
 import env from 'constants/env'
 import { defaultSidebarExpanded } from 'constants/layout'
@@ -43,6 +44,7 @@ const AppWrapper: FC<PropsWithChildren<AppWrapperProps>> = ({ children }) => {
               const { localeName, themeName } = localSettingsState
               return (
                 <ThemeContextProvider {...{ localeName, themeName }}>
+                  <CssBaseline />
                   <HelmetProvider>
                     <Router>{children}</Router>
                   </HelmetProvider>

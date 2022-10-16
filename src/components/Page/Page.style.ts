@@ -9,8 +9,4 @@ export const StyledPage = styled.div`
   min-height: 100%;
 
   padding: 24px;
-
-  h1 {
-    color: #e8eaed;
-  }
 `

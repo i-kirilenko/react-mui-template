@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { Typography } from '@mui/material'
 
 import env from 'constants/env'
 import { cnc } from 'utils/classNameCreator'
@@ -33,7 +34,7 @@ const Page: FC<Props> = (props) => {
       <Helmet>
         <title>{fullTitle}</title>
       </Helmet>
-      {!!header && <h1>{header}</h1>}
+      {!!header && <Typography variant="h1">{header}</Typography>}
       {children}
     </StyledPage>
   )

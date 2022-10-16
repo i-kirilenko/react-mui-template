@@ -1,15 +1,10 @@
-import styled from '@emotion/styled'
+import { styled } from '@mui/material/styles'
 
-export const StyledApp = styled.div`
-  display: flex;
-  overflow-x: hidden;
-  align-items: stretch;
-
-  height: 100%;
-
-  color: white;
-
-  background: #252525;
-
-  font-family: sans-serif;
-`
+export const StyledApp = styled('div')(({ theme }) => ({
+  alignItems: 'stretch',
+  backgroundColor: theme.palette.background.default,
+  color: theme.palette.text.primary,
+  display: 'flex',
+  height: '100%',
+  overflowX: 'hidden',
+}))

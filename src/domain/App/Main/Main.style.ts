@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import { styled } from '@mui/material/styles'
 
 import {
   headerHeight,
@@ -13,24 +13,20 @@ type Props = {
   sidebarExpanded: boolean
 }
 
-export const StyledMain = styled.div<Props>`
-  position: relative;
+export const StyledMain = styled('div')<Props>(
+  ({ sidebarExpanded, theme }) => ({
+    backgroundColor: theme.palette.background.default,
+    display: 'flex',
+    flex: 'auto',
+    flexDirection: 'column',
+    overflowY: 'auto',
+    paddingTop: `${headerHeight}px`,
+    position: 'relative',
+    transition: `margin-right ${sidebarAnimateDuration}s ease-in-out`,
 
-  display: flex;
-
-  overflow-y: auto;
-  flex: auto;
-  flex-direction: column;
-
-  padding-top: ${headerHeight}px;
-
-  transition: ${sidebarAnimateDuration}s;
-
-  background: #1a1a1a;
-
-  @media (max-width: ${minWindowWidthByExpandedSidebar}px) {
-    width: calc(100% - ${collapsed}px);
-    margin-right: ${(p) =>
-      p.sidebarExpanded ? `calc(${collapsed}px - 100%)` : 0};
-  }
-`
+    [`@media (max-width: ${minWindowWidthByExpandedSidebar}px)`]: {
+      marginRight: sidebarExpanded ? `calc(${collapsed}px - 100%)` : 0,
+      width: `calc(100% - ${collapsed}px)`,
+    },
+  }),
+)

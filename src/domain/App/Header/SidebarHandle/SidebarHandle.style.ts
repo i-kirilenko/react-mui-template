@@ -16,10 +16,10 @@ export const StyledSidebarHandle = styled.div`
   width: ${width}px;
 
   cursor: pointer;
-  transition: ${sidebarAnimateDuration}s;
+  transition: ${sidebarAnimateDuration}s ease-in-out;
 
   &.expanded {
-    transition: ${sidebarAnimateDuration}s;
+    transition: ${sidebarAnimateDuration}s ease-in-out;
     transform: rotate(180deg);
   }
 

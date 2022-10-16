@@ -1,33 +1,27 @@
 import { NavLink } from 'react-router-dom'
-import styled from '@emotion/styled'
+import type { Theme } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-const activeStyle = `
-  &.active {
-    text-decoration: none;
+const getCommonStyle = (theme: Theme) => ({
+  '&.canBeActive.active': {
+    color: theme.palette.primary.main,
+    textDecoration: 'none',
+  },
+  '&:focus': {
+    textDecoration: 'underline',
+  },
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+  color: theme.palette.text.secondary,
+  textDecoration: 'none',
+})
 
-    color: lightgray;
-  }
-`
+export const StyledButton = styled('span')(({ theme }) => ({
+  cursor: 'pointer',
+  ...getCommonStyle(theme),
+}))
 
-const commonStyle = `
-  text-decoration: none;
-  color: lightskyblue;
-
-  &:hover,
-  &:focus {
-    text-decoration: underline;
-  }
-  
-  &.canBeActive {
-    ${activeStyle}
-  }
-`
-
-export const StyledButton = styled.span`
-  cursor: pointer;
-  ${commonStyle}
-`
-
-export const StyledNavLink = styled(NavLink)`
-  ${commonStyle}
-`
+export const StyledNavLink = styled(NavLink)(({ theme }) =>
+  getCommonStyle(theme),
+)
