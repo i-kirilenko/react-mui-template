@@ -15,7 +15,7 @@ import LocalSettingsAbstractContextProvider, {
 
 export type LocalSettingsState = {
   localeName: LocaleName
-  sidebarExpanded: boolean | null
+  sidebarExpanded: boolean
   themeName: ThemeName
 }
 

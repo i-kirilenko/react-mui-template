@@ -12,8 +12,8 @@ const SidebarHandle: FC = () => {
   const [localSettingsState, setLocalSettingsState] =
     useLocalSettings<LocalSettingsState>()
 
-  const { sidebarExpanded: expanded = null } = localSettingsState || {}
-  log(`SidebarHandle${expanded === null ? '.initial' : ''}.render`)(expanded)
+  const { sidebarExpanded: expanded } = localSettingsState
+  log(`SidebarHandle.render`)(`Expanded: ${expanded}`)
 
   return (
     <StyledSidebarHandle

@@ -26,4 +26,12 @@ export const menuPoints: MenuPoint[] = [
       },
     ],
   },
+  {
+    id: 'submenuProfile',
+    label: 'Profile',
+    submenuPoints: [
+      { id: 'profile', label: 'Profile', routeConfig: routes.profile },
+      { id: 'admin', label: 'Admin', routeConfig: routes.admin },
+    ],
+  },
 ]

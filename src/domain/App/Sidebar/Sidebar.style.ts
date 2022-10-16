@@ -8,7 +8,7 @@ import {
 
 const { expanded: expandedWidth, collapsed: collapsedWidth } = sidebarWidth
 
-export type Props = {
+type Props = {
   sidebarExpanded: boolean
 }
 

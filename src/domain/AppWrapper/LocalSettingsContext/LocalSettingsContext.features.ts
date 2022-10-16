@@ -18,8 +18,6 @@ export const restoreLocalSettingsState = <State extends {}>({
       localSettingsRawState ? JSON.parse(localSettingsRawState) : null
     ) as State | null
 
-    // console.log('>>> state', state)
-
     const status = state ? 'exist' : 'not exist'
     logger.success?.forEach((logAction) => logAction(status))
 

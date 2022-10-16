@@ -1,6 +1,5 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 
-import { defaultSidebarExpanded } from 'constants/layout'
 import { LocalSettingsState } from 'domain/AppWrapper/AppWrapper.adapter.LocalSettingsContext'
 import { useLocalSettings } from 'domain/AppWrapper/LocalSettingsContext'
 import { cnc } from 'utils/classNameCreator'
@@ -8,26 +7,20 @@ import log from 'utils/log'
 import { withRenderingTest } from 'utils/test/renderingTest.hoc'
 import Menu from './Menu'
 
-import { Props as StyledSidebarProps, StyledSidebar } from './Sidebar.style'
+import { StyledSidebar } from './Sidebar.style'
 
 const Sidebar: FC = () => {
   const [localSettingsState] = useLocalSettings<LocalSettingsState>()
-  const { sidebarExpanded = null } = localSettingsState || {}
+  const { sidebarExpanded } = localSettingsState
 
-  log(`Sidebar${sidebarExpanded === null ? '.initial' : ''}.render`)(
-    sidebarExpanded,
-  )
-
-  const styledSidebarProps: StyledSidebarProps = {
-    sidebarExpanded: sidebarExpanded ?? defaultSidebarExpanded,
-  }
+  log(`Sidebar.render`)(`Expanded: ${sidebarExpanded}`)
 
   return (
-    <StyledSidebar className={cnc('Sidebar')} {...styledSidebarProps}>
+    <StyledSidebar className={cnc('Sidebar')} {...{ sidebarExpanded }}>
       <Menu />
     </StyledSidebar>
   )
 }
 
 export const testContent = 'Sidebar test content'
-export default withRenderingTest(Sidebar, testContent)
+export default withRenderingTest(memo(Sidebar), testContent)

@@ -1,6 +1,5 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 
-import { defaultSidebarExpanded } from 'constants/layout'
 import { LocalSettingsState } from 'domain/AppWrapper/AppWrapper.adapter.LocalSettingsContext'
 import { useLocalSettings } from 'domain/AppWrapper/LocalSettingsContext'
 import { cnc } from 'utils/classNameCreator'
@@ -8,22 +7,16 @@ import log from 'utils/log'
 import { withRenderingTest } from 'utils/test/renderingTest.hoc'
 import SidebarHandle from './SidebarHandle'
 
-import { Props as StyledHeaderProps, StyledHeader } from './Header.style'
+import { StyledHeader } from './Header.style'
 
 const Header: FC = () => {
   const [localSettingsState] = useLocalSettings<LocalSettingsState>()
-  const { sidebarExpanded = null } = localSettingsState || {}
+  const { sidebarExpanded } = localSettingsState
 
-  log(`Header${sidebarExpanded === null ? '.initial' : ''}.render`)(
-    sidebarExpanded,
-  )
-
-  const styledHeaderProps: StyledHeaderProps = {
-    sidebarExpanded: sidebarExpanded ?? defaultSidebarExpanded,
-  }
+  log(`Header.render`)(`Sidebar: ${sidebarExpanded}`)
 
   return (
-    <StyledHeader className={cnc('Header')} {...styledHeaderProps}>
+    <StyledHeader className={cnc('Header')} {...{ sidebarExpanded }}>
       <SidebarHandle />
       <span style={{ flex: 'auto', textAlign: 'center' }}>Header</span>
     </StyledHeader>
@@ -31,4 +24,4 @@ const Header: FC = () => {
 }
 
 export const testContent = 'Header test content'
-export default withRenderingTest(Header, testContent)
+export default withRenderingTest(memo(Header), testContent)

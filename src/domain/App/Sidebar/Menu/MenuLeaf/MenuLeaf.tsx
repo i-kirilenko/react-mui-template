@@ -18,23 +18,19 @@ const MenuLeaf: FC<MenuLeafProps> = ({ path, id, label }) => {
   const [localSettingsState, setLocalSettingsState] =
     useLocalSettings<LocalSettingsState>()
 
-  const { sidebarExpanded = null } = localSettingsState || {}
+  const { sidebarExpanded } = localSettingsState
 
-  log(
-    `MenuLeaf-${id}.${
-      windowWidth + (sidebarExpanded === null ? '.initial' : '')
-    }.render`,
-  )(sidebarExpanded)
+  log(`MenuLeaf-${id}.${windowWidth}.render`)(sidebarExpanded)
 
   const handleLinkClick = useCallback(() => {
     if (
       windowWidth &&
       windowWidth < minWindowWidthByExpandedSidebar &&
-      localSettingsState?.sidebarExpanded
+      sidebarExpanded
     ) {
       setLocalSettingsState({ sidebarExpanded: false })
     }
-  }, [localSettingsState?.sidebarExpanded, setLocalSettingsState, windowWidth])
+  }, [setLocalSettingsState, sidebarExpanded, windowWidth])
 
   return (
     <StyledMenuLeaf className={cnc('MenuLeaf')}>

@@ -9,7 +9,7 @@ import {
 
 const { collapsed } = sidebarWidth
 
-export type Props = {
+type Props = {
   sidebarExpanded: boolean
 }
 
