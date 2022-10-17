@@ -15,6 +15,7 @@ export const menuPoints: MenuPoint[] = [
     label: 'Projects',
     submenuPoints: [
       { id: 'projects', label: 'Projects', routeConfig: routes.projects },
+      { id: 'issues', label: 'Issues', routeConfig: routes.issues },
       {
         id: 'submenuPlanning',
         label: 'Planning',

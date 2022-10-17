@@ -5,6 +5,7 @@ import { LazyComponent } from 'components/RouterCreator/RouteElement/RouteElemen
 import { rootPaths, signInPath } from 'constants/routes/paths'
 import Home from 'domain/App/Main/Home'
 import SignIn from 'domain/App/Main/SignIn'
+import issuesRouteConfig from './issues'
 import projectsRouteConfig from './projects'
 
 type RootRouteId = keyof typeof rootPaths | 'noMatch'
@@ -40,6 +41,8 @@ const rootRouteConfig: Record<RootRouteId, Omit<RouteConfig, 'signInPath'>> = {
     path: rootPaths.home,
     roles: ['guest', 'user', 'admin'],
   },
+
+  issues: issuesRouteConfig,
 
   noMatch: {
     id: 'noMatch',

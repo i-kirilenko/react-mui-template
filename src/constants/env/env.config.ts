@@ -2,7 +2,9 @@ export const envList = [
   'VITE_BRANCH',
   'VITE_DEBUG_CLASSNAME_ENABLED',
   'VITE_DEBUG_LOG_ENABLED',
+  'VITE_MOCKS_ENABLED',
   'VITE_PROJECT_PUBLIC_NAME',
+  'VITE_REACT_QUERY_DEVTOOLS_ENABLED',
   'VITE_TEST_ENABLED',
   'VITE_TIMESTAMP',
 ] as const
@@ -13,7 +15,9 @@ const envKeys = [
   'branch',
   'debugClassNameEnabled',
   'debugLogEnabled',
+  'mocksEnabled',
   'projectPublicName',
+  'reactQueryDevtoolsEnabled',
   'testEnabled',
   'timestamp',
 ] as const
@@ -38,9 +42,17 @@ export const envConfig: Record<EnvListItem, EnvMapItem> = {
     name: 'debugLogEnabled',
     type: 'boolean',
   },
+  VITE_MOCKS_ENABLED: {
+    name: 'mocksEnabled',
+    type: 'boolean',
+  },
   VITE_PROJECT_PUBLIC_NAME: {
     name: 'projectPublicName',
     type: 'string',
+  },
+  VITE_REACT_QUERY_DEVTOOLS_ENABLED: {
+    name: 'reactQueryDevtoolsEnabled',
+    type: 'boolean',
   },
   VITE_TEST_ENABLED: {
     name: 'testEnabled',

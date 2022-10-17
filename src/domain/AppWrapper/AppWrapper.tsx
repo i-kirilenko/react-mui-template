@@ -1,8 +1,11 @@
 import { FC, PropsWithChildren, StrictMode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
+import { QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { HashRouter as Router } from 'react-router-dom'
 import { CssBaseline } from '@mui/material'
 
+import queryClient, { queryTestClient } from 'api/queryClient'
 import env from 'constants/env'
 import { defaultSidebarExpanded } from 'constants/layout'
 import { ThemeName } from 'constants/themes/base'
@@ -24,9 +27,14 @@ export const defaultThemeName: ThemeName = window.matchMedia(
   ? 'dark'
   : 'light'
 
-type AppWrapperProps = {}
+type AppWrapperProps = {
+  isTest?: boolean
+}
 
-const AppWrapper: FC<PropsWithChildren<AppWrapperProps>> = ({ children }) => {
+const AppWrapper: FC<PropsWithChildren<AppWrapperProps>> = ({
+  children,
+  isTest = false,
+}) => {
   log('AppWrapper.render')()
 
   return (
@@ -45,9 +53,14 @@ const AppWrapper: FC<PropsWithChildren<AppWrapperProps>> = ({ children }) => {
               return (
                 <ThemeContextProvider {...{ localeName, themeName }}>
                   <CssBaseline />
-                  <HelmetProvider>
-                    <Router>{children}</Router>
-                  </HelmetProvider>
+                  <QueryClientProvider
+                    client={isTest ? queryTestClient : queryClient}
+                  >
+                    <HelmetProvider>
+                      <Router>{children}</Router>
+                      {env.reactQueryDevtoolsEnabled && <ReactQueryDevtools />}
+                    </HelmetProvider>
+                  </QueryClientProvider>
                 </ThemeContextProvider>
               )
             }}
