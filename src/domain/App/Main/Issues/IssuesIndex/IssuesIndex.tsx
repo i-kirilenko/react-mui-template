@@ -30,7 +30,7 @@ const IssuesIndex: FC<PropsWithIssuesReading<IssuesIndexProps>> = ({
     return null
   }
 
-  log('IssuesIndex.loaded.render')((issues || []).length)
+  log('IssuesIndex.loaded.render')(`${(issues || []).length} issues`)
 
   return (
     <StyledIssuesIndex header="Issues" id="IssuesIndex" title="Issues">

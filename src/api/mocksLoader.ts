@@ -1,6 +1,7 @@
 import { apiConfigs, BaseApiQueryKey } from 'api/apiConfigs'
 
 const mocksModules: Partial<Record<BaseApiQueryKey, () => Promise<unknown>>> = {
+  eventsReading: () => import('./events/events.mocks'),
   issuesReading: () => import('./issues/issues.mocks'),
 }
 
